@@ -44,6 +44,12 @@ Invoke ". build/envsetup.sh" from your shell to add the following functions to y
 - refreshmod: Refresh list of modules for allmod/gomod/pathmod/outmod/installmod.
 - syswrite:   Remount partitions (e.g. system.img) as writable, rebooting if necessary.
 
+EOF
+
+    __print_wannabe_functions_help
+
+cat <<EOF
+
 Environment options:
 - SANITIZE_HOST: Set to 'address' to use ASAN for all host modules.
 - ANDROID_QUIET_BUILD: set to 'true' to display only the essential messages.
@@ -147,12 +153,12 @@ function check_product()
         echo "Couldn't locate the top of the tree.  Try setting TOP." >&2
         return
     fi
-    if (echo -n $1 | grep -q -e "^arrow_") ; then
-        ARROW_BUILD=$(echo -n $1 | sed -e 's/^arrow_//g')
+    if (echo -n $1 | grep -q -e "^wannabe_") ; then
+        WANNABE_BUILD=$(echo -n $1 | sed -e 's/^wannabe_//g')
     else
-        ARROW_BUILD=
+        WANNABE_BUILD=
     fi
-    export ARROW_BUILD
+    export WANNABE_BUILD
 
         TARGET_PRODUCT=$1 \
         TARGET_BUILD_VARIANT= \
@@ -708,13 +714,13 @@ function lunch()
         # if we can't find a product, try to grab it off the ArrowOS GitHub
         T=$(gettop)
         cd $T > /dev/null
-        vendor/arrow/build/tools/roomservice.py $product
+        vendor/wannabe/build/tools/roomservice.py $product
         cd - > /dev/null
         check_product $product
     else
         T=$(gettop)
         cd $T > /dev/null
-        vendor/arrow/build/tools/roomservice.py $product true
+        vendor/wannabe/build/tools/roomservice.py $product true
         cd - > /dev/null
     fi
 
@@ -1921,7 +1927,7 @@ export ANDROID_BUILD_TOP=$(gettop)
 
 function repopick() {
     T=$(gettop)
-    $T/vendor/arrow/build/tools/repopick.py $@
+    $T/vendor/wannabe/build/tools/repopick.py $@
 }
 
 function arrow_prebuilts() {
