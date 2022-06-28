@@ -220,40 +220,25 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   # Dump fingerprints
   script.Print("Target: {}".format(target_info.fingerprint))
 
-  android_version = target_info.GetBuildProp("ro.build.version.release")
-  build_id = target_info.GetBuildProp("ro.build.id")
-  build_date = target_info.GetBuildProp("ro.build.date")
-  security_patch = target_info.GetBuildProp("ro.build.version.security_patch")
-  device = target_info.GetBuildProp("ro.product.device")
+  date = target_info.GetBuildProp("ro.WANNABE.build.date")
+  version = target_info.GetBuildProp("ro.WANNABE.version")
 
-  script.Print("=================================================");
-  script.Print("");
-  script.Print("                     ''                  ");
-  script.Print("               `````.oy.```````          ");
-  script.Print("            ```````:dMMh.````````        ");
-  script.Print("          ```````.sMMMMMy.`````````      ");
-  script.Print("        ```````./mMMMMMMMy.``````````    ");
-  script.Print("       ```````-yMMMMMMMMMMy.``````````   ");
-  script.Print("       `````./mMMNNNMMMMMMMy.``````````  ");
-  script.Print("      `````-ymmhMMMMMMhNMMMMs.`````````  ");
-  script.Print("      ````./M..```````.-odMMMs.````````  ");
-  script.Print("      ```````````````````./hMMs.```````  ");
-  script.Print("       ````````````````````./dMs.``````  ");
-  script.Print("        ``````````````````````.+ms`````  ");
-  script.Print("         ```````````````````````-yo```   ");
-  script.Print("          ``````````````````````...d`    ");
-  script.Print("            ````````````````````` `` .   ");
-  script.Print("               ````````````````          ");
-  script.Print("");
-  script.Print("                    ArrowOS");
-  script.Print("");
-  script.Print("=================================================");
-  script.Print(" Android version  : %s"%(android_version));
-  script.Print(" Build id         : %s"%(build_id));
-  script.Print(" Build date       : %s"%(build_date));
-  script.Print(" Security patch   : %s"%(security_patch));
-  script.Print(" Device           : %s"%(device));
-  script.Print("=================================================");
+  if target_info.GetBuildProp("ro.product.model") is not None:
+    model = target_info.GetBuildProp("ro.product.model")
+    script.Print("***********************************************");
+    script.Print("           WannabeOS for %s"%(model));
+    script.Print("                 BY: andrejWH                  ");
+    script.Print("   VERSION: %s"%(version));
+    script.Print("   COMPILED ON: %s"%(date));
+    script.Print("***********************************************");
+  else:
+    name = target_info.GetBuildProp("ro.product.name")
+    script.Print("***********************************************");
+    script.Print("           WannabeOS for %s"%(name));
+    script.Print("                 BY: andrejWH                  ");
+    script.Print("   VERSION: %s"%(version));
+    script.Print("   COMPILED ON: %s"%(date));
+    script.Print("***********************************************");
 
   device_specific.FullOTA_InstallBegin()
 
